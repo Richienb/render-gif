@@ -1,13 +1,17 @@
 const test = require("ava")
-const theModule = require(".")
+const fs = require("fs").promises
+const delay = require("delay")
+const renderGif = require(".")
 
-test("main", t => {
-	t.throws(() => {
-		theModule(123)
-	}, {
-		instanceOf: TypeError,
-		message: "Expected a string, got number"
-	})
+test("main", async t => {
+	let result = ""
 
-	t.is(theModule("unicorns"), "unicorns & rainbows")
+	const animation = renderGif(await fs.readFile("fixture.gif"), data => {
+		result += data
+	}, { maximumFramerate: 30 })
+
+	await delay(500)
+	animation.playing = false
+
+	t.snapshot(result)
 })

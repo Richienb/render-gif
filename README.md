@@ -1,41 +1,57 @@
-# the-module [![Travis CI Build Status](https://img.shields.io/travis/com/Richienb/the-module/master.svg?style=for-the-badge)](https://travis-ci.com/Richienb/the-module)
+# render-gif [![Travis CI Build Status](https://img.shields.io/travis/com/Richienb/render-gif/master.svg?style=for-the-badge)](https://travis-ci.com/Richienb/render-gif)
 
-My awesome module.
+Render a gif and provide frames to draw.
 
-[![NPM Badge](https://nodei.co/npm/the-module.png)](https://npmjs.com/package/the-module)
+[![NPM Badge](https://nodei.co/npm/render-gif.png)](https://npmjs.com/package/render-gif)
 
 ## Install
 
 ```sh
-npm install the-module
+npm install render-gif
 ```
 
 ## Usage
 
 ```js
-const theModule = require("the-module");
-
-theModule("unicorns");
-//=> 'unicorns & rainbows'
+const fs = require("fs");
+const logUpdate = require("log-update");
+const renderGif = require("render-gif");
+ 
+renderGif(fs.readFileSync("unicorn.gif"), logUpdate);
 ```
 
 ## API
 
-### theModule(input, options?)
+### renderGif(data, callback, options?)
 
-#### input
+#### data
 
-Type: `string`
+Type: `array-like`
 
-Lorem ipsum.
+The gif data. Can be anything array-like such as a Buffer, Array or Uint8Array.
+
+#### callback
+
+Type: `(data: ArrayLike) => void`
+
+The callback to provide each rendered frame to.
 
 #### options
 
 Type: `object`
 
-##### postfix
+##### maximumFramerate
 
-Type: `string`\
-Default: `rainbows`
+Type: `number`\
+Default: `Infinity`
 
-Lorem ipsum.
+The maximum framerate to render the gif at.
+
+#### Return value
+
+##### playing
+
+Type: `boolean`\
+Default: `true`
+
+Whether the animation should be rendered and provided to the callback.
