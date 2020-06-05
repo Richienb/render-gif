@@ -6,7 +6,7 @@ const debounceFunction = require("debounce-fn")
 const delay = require("delay")
 const decodeGif = require("decode-gif")
 
-module.exports = (data, callback, { maximumFramerate } = {}) => {
+module.exports = (data, callback, { maximumFrameRate } = {}) => {
 	const { width, height, frames: gifFrames } = decodeGif(data)
 
 	let image
@@ -29,33 +29,33 @@ module.exports = (data, callback, { maximumFramerate } = {}) => {
 	}
 
 	const frames = new Cycled(gifFrames)
-	let playing_ = true
+	let isPlaying_ = true
 	let animateFrame = async () => {
 		callback(await renderGifFrame({ data: frames.current().data, width, height }))
 		await delay(frames.current().timeCode - frames.previous().timeCode)
 		frames.step(2)
 
-		if (playing_) {
+		if (isPlaying_) {
 			await animateFrame()
 		}
 	}
 
-	if (maximumFramerate) {
-		animateFrame = debounceFunction(animateFrame, { wait: 1000 / maximumFramerate })
+	if (maximumFrameRate) {
+		animateFrame = debounceFunction(animateFrame, { wait: 1000 / maximumFrameRate })
 	}
 
 	animateFrame()
 
 	return {
-		get playing() {
-			return playing_
+		get isPlaying() {
+			return isPlaying_
 		},
-		set playing(value) {
-			if (playing_ === false && value === true) {
+		set isPlaying(value) {
+			if (isPlaying_ === false && value === true) {
 				animateFrame()
 			}
 
-			playing_ = value
+			isPlaying_ = value
 		}
 	}
 }

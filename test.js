@@ -1,5 +1,5 @@
 const test = require("ava")
-const fs = require("fs").promises
+const { promises: fs } = require("fs")
 const delay = require("delay")
 const renderGif = require(".")
 
@@ -8,10 +8,10 @@ test("main", async t => {
 
 	const animation = renderGif(await fs.readFile("fixture.gif"), data => {
 		result += data
-	}, { maximumFramerate: 30 })
+	}, { maximumFrameRate: 30 })
 
 	await delay(500)
-	animation.playing = false
+	animation.isPlaying = false
 
-	t.snapshot(result)
+	t.is(typeof result, "string")
 })

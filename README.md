@@ -40,7 +40,7 @@ The callback to provide each rendered frame to.
 
 Type: `object`
 
-##### maximumFramerate
+##### maximumFrameRate
 
 Type: `number`\
 Default: `Infinity`
@@ -49,7 +49,7 @@ The maximum framerate to render the gif at.
 
 #### Return value
 
-##### playing
+##### isPlaying
 
 Type: `boolean`\
 Default: `true`

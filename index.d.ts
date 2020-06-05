@@ -1,12 +1,12 @@
 declare namespace renderGif {
 	export interface ReturnValue {
 		/** Whether the animation should be rendered and provided to the callback. */
-		playing: boolean
+		isPlaying: boolean
 	}
 
 	export interface Options {
 		/** The maximum framerate to render the gif at. */
-		maximumFramerate?: number
+		maximumFrameRate?: number
 	}
 }
 
