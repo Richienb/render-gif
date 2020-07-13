@@ -6,7 +6,11 @@ const debounceFunction = require("debounce-fn")
 const delay = require("delay")
 const decodeGif = require("decode-gif")
 
-module.exports = (data, callback, { maximumFrameRate } = {}) => {
+module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
+	if (typeof maximumFrameRate !== "number") {
+		throw new TypeError(`Expected \`maximumFrameRate\` to be a number, got ${typeof maximumFrameRate}`)
+	}
+
 	const { width, height, frames: gifFrames } = decodeGif(data)
 
 	let image
@@ -40,7 +44,7 @@ module.exports = (data, callback, { maximumFrameRate } = {}) => {
 		}
 	}
 
-	if (maximumFrameRate) {
+	if (maximumFrameRate !== Infinity) {
 		animateFrame = debounceFunction(animateFrame, { wait: 1000 / maximumFrameRate })
 	}
 
