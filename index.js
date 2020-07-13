@@ -2,7 +2,7 @@
 
 const Jimp = require("jimp")
 const Cycled = require("cycled")
-const debounceFunction = require("debounce-fn")
+const pDebounce = require("p-debounce")
 const delay = require("delay")
 const decodeGif = require("decode-gif")
 
@@ -45,7 +45,7 @@ module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
 	}
 
 	if (maximumFrameRate !== Infinity) {
-		animateFrame = debounceFunction(animateFrame, { wait: 1000 / maximumFrameRate })
+		animateFrame = pDebounce(animateFrame, { wait: 1000 / maximumFrameRate })
 	}
 
 	animateFrame()
