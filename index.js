@@ -2,7 +2,6 @@
 
 const Jimp = require("jimp")
 const Cycled = require("cycled")
-const pDebounce = require("p-debounce")
 const delay = require("delay")
 const decodeGif = require("decode-gif")
 
@@ -34,21 +33,35 @@ module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
 
 	const frames = new Cycled(gifFrames)
 	let isPlaying_ = true
-	let animateFrame = async () => {
-		callback(await renderGifFrame({ data: frames.current().data, width, height }))
+
+	const shouldReturnFrame = () => {
+		if (maximumFrameRate === Infinity) {
+			return true
+		}
+
+		const { timeCode } = frames.current()
+		const { timeCode: nextTimeCode } = frames.next()
+		frames.previous()
+
+		return timeCode % (1000 / maximumFrameRate) <= nextTimeCode - timeCode
+	}
+
+	const renderFrame = async () => {
+		const renderedFrame = await renderGifFrame({ data: frames.current().data, width, height })
+
+		if (shouldReturnFrame()) {
+			callback(renderedFrame)
+		}
+
 		await delay(frames.current().timeCode - frames.previous().timeCode)
 		frames.step(2)
 
 		if (isPlaying_) {
-			await animateFrame()
+			await renderFrame()
 		}
 	}
 
-	if (maximumFrameRate !== Infinity) {
-		animateFrame = pDebounce(animateFrame, { wait: 1000 / maximumFrameRate })
-	}
-
-	animateFrame()
+	renderFrame()
 
 	return {
 		get isPlaying() {
@@ -56,7 +69,7 @@ module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
 		},
 		set isPlaying(value) {
 			if (isPlaying_ === false && value === true) {
-				animateFrame()
+				renderFrame()
 			}
 
 			isPlaying_ = value

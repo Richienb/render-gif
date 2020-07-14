@@ -32,8 +32,7 @@
 		"cycled": "^1.1.0",
 		"decode-gif": "^1.0.0",
 		"delay": "^4.3.0",
-		"jimp": "^0.12.1",
-		"p-debounce": "^2.1.0"
+		"jimp": "^0.12.1"
 	},
 	"devDependencies": {
 		"ava": "^3.8.1",
