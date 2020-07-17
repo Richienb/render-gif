@@ -30,7 +30,7 @@
 	],
 	"dependencies": {
 		"cycled": "^1.2.0",
-		"decode-gif": "^1.0.0",
+		"decode-gif": "^1.0.1",
 		"delay": "^4.3.0",
 		"jimp": "^0.14.0"
 	},
