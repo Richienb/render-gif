@@ -40,8 +40,7 @@ module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
 		}
 
 		const { timeCode } = frames.current()
-		const { timeCode: nextTimeCode } = frames.next()
-		frames.previous()
+		const { timeCode: nextTimeCode } = frames.peek(1)
 
 		return timeCode % (1000 / maximumFrameRate) <= nextTimeCode - timeCode
 	}
@@ -53,8 +52,8 @@ module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
 			callback(renderedFrame)
 		}
 
-		await delay(frames.current().timeCode - frames.previous().timeCode)
-		frames.step(2)
+		await delay(frames.peek(1).timeCode - frames.current().timeCode)
+		frames.next()
 
 		if (isPlaying_) {
 			await renderFrame()
@@ -68,7 +67,11 @@ module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
 			return isPlaying_
 		},
 		set isPlaying(value) {
-			if (isPlaying_ === false && value === true) {
+			if (typeof value !== "boolean") {
+				throw new TypeError(`Expected a boolean, got ${typeof value}`)
+			}
+
+			if (!isPlaying_ && value) {
 				renderFrame()
 			}
 
