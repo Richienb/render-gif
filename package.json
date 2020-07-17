@@ -35,12 +35,9 @@
 		"jimp": "^0.12.1"
 	},
 	"devDependencies": {
-		"ava": "^3.8.1",
+		"ava": "^3.10.1",
 		"eslint-config-richienb": "^0.4.2",
-		"xo": "^0.30.0"
-	},
-	"resolutions": {
-		"eslint": "^6.8.0"
+		"xo": "^0.32.1"
 	},
 	"xo": {
 		"extends": "richienb",
