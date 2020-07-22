@@ -14,10 +14,10 @@ npm install render-gif
 
 ```js
 const fs = require("fs");
-const logUpdate = require("log-update");
 const renderGif = require("render-gif");
+const renderFrame = require("./render-frame");
  
-renderGif(fs.readFileSync("unicorn.gif"), logUpdate);
+renderGif(fs.readFileSync("unicorn.gif"), renderFrame);
 ```
 
 ## API
@@ -34,7 +34,7 @@ The gif data. Can be anything array-like such as a Buffer, Array or Uint8Array.
 
 Type: `(data: ArrayLike) => void`
 
-The callback to provide each rendered frame to.
+The callback to provide each rendered frame to. The data is a png encoded as a Uint8ClampedArray.
 
 #### options
 

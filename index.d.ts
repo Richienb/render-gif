@@ -13,15 +13,15 @@ declare namespace renderGif {
 /**
 Render a gif and provide frames to draw.
 @param data The gif data. Can be anything array-like such as a Buffer, Array or Uint8Array.
-@param callback The callback to provide each rendered frame to.
+@param callback The callback to provide each rendered frame to. The data is a png encoded as a Uint8ClampedArray.
 @param options Options.
 @example
 ```
 const fs = require("fs");
-const logUpdate = require("log-update");
 const renderGif = require("render-gif");
+const renderFrame = require("./render-frame");
 
-renderGif(fs.readFileSync("unicorn.gif"), logUpdate);
+renderGif(fs.readFileSync("unicorn.gif"), renderFrame);
 ```
 */
 declare function renderGif(data: ArrayLike<number>, callback: (data: ArrayLike<number>) => void, options: renderGif.Options): renderGif.ReturnValue
