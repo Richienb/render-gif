@@ -1,6 +1,6 @@
 const test = require("ava")
 const { promises: fs } = require("fs")
-const delay = require("delay")
+const delay = require("yoctodelay")
 const renderGif = require(".")
 
 test("main", async t => {

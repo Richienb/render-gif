@@ -2,7 +2,7 @@
 
 const Jimp = require("jimp")
 const Cycled = require("cycled")
-const delay = require("delay")
+const delay = require("yoctodelay")
 const decodeGif = require("decode-gif")
 
 module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
