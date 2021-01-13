@@ -28,6 +28,7 @@ module.exports = (data, callback, { maximumFrameRate = Infinity } = {}) => {
 			}
 		}
 
+		// TODO: Return an ArrayBuffer in the next breaking version
 		return new Uint8ClampedArray(await image.getBufferAsync(Jimp.MIME_PNG))
 	}
 
